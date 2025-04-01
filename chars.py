@@ -26,7 +26,6 @@ class Hero(Character):
 
     def equip(self, weapon) -> None:
         self.weapon = weapon
-        print(f"{self.name} has equipped a(n) {self.weapon.name}!")
 
     def drop(self, weapon) -> None:
         print(f"{self.name} has dropped the {self.weapon.name}")
