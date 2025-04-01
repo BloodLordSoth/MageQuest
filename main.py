@@ -1,7 +1,9 @@
-from chars import Character
+from chars import Hero, Enemy
+from weapons import short_bow, iron_sword
 
-hero = Character(name="Hero", health = 100)
-enemy = Character(name="Enemy", health = 100)
+hero = Hero(name="Hero", health = 100)
+hero.equip(iron_sword)
+enemy = Enemy(name="Enemy", health = 100, weapon=short_bow)
 
 while True:
     hero.attack(enemy)
