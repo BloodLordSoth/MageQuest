@@ -1,75 +1,96 @@
 import os
-from chars import Hero, Enemy
-from weapons import short_bow, iron_sword
+import sys
+import time
+import combat
+from player import Player
+from values import max_hit
 
-hero = Hero(name="", health = 100)
-hero.equip(iron_sword)
-enemy = Enemy(name="Enemy", health = 100, weapon=short_bow)
-run = True
-menu = True
-play = False
-rules = False
-
-def __str__(self):
-    return hero.name, hero.health
-
-string_rep = [hero.name, hero.health]
-
-def save():
-    f = open("load.txt", "w")
-    for info in string_rep:
-        f.writelines(str(info) + "\n")
-    f.close()
-
-while run:
-    while menu:
-        print("1: New Game")
-        print("2: Load Game")
-        print("3: Game Rules")
-        print("4: Quit Game")
-        print("5: Combat")
-
-        if rules:
-            print(f"Welcome to MageQuest{hero.name}! The rules are simple. Slay monsters and level up!")
-            print(f"You can insert commands into the console. The commands are as follows:")
-            rules = False
-            choice = ""
-            input = ("")
+def start():
+    os.system('clear')
+    time.sleep(1)
+    print('##########################################################################################################')
+    print('#               ███╗   ███╗ █████╗  ██████╗ ███████╗ ██████╗ ██╗   ██╗███████╗███████╗████████╗          #')
+    print('#               ████╗ ████║██╔══██╗██╔════╝ ██╔════╝██╔═══██╗██║   ██║██╔════╝██╔════╝╚══██╔══╝          #')
+    print('#               ██╔████╔██║███████║██║  ███╗█████╗  ██║   ██║██║   ██║█████╗  ███████╗   ██║             #')  
+    print('#               ██║╚██╔╝██║██╔══██║██║   ██║██╔══╝  ██║▄▄ ██║██║   ██║██╔══╝  ╚════██║   ██║             #')  
+    print('#               ██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗╚██████╔╝╚██████╔╝███████╗███████║   ██║             #')  
+    print('#               ╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝ ╚══▀▀═╝  ╚═════╝ ╚══════╝╚══════╝   ╚═╝             #')
+    print('#                                                                       BloodLordSoth production         #')
+    print('##########################################################################################################')
+    time.sleep(3)
+    print('')
+    print('')
+    print('')
+    print('')
+    print('')
+    print('Main menu: [1]New Game [2]Load Game [3]Game rules [4]Quit:\n')
+    run = True
+    
+    while run:
+        menu = input(': ')
+        if menu == '1' or menu == "N" or menu == 'New Game':
+            start_story()
+        elif menu == '3' or menu == 'G' or menu == 'Game rules':
+            rules()
+        elif menu == '4' or menu == 'Q' or menu == 'Quit':
+            sys.exit()
         else:
-            choice = input("")
-        
-        if choice == "1":
-            hero.name = input("what is your name hero? ")
-            menu = False
-            play = True
-        elif choice == "2":
-            f = open("load.txt" "\r")
-            load_list = f.readlines()
-            name = load_list[0]
-            health = load_list[1]
-        elif choice == "3":
-            rules = True
-        elif choice == "4":
-            quit()
-        menu = False
-        play = True
-    if choice == "5":
-        while True:
-            os.system("clear")
-            print(f"Hello {hero.name}! Welcome to MageQuest!")
-            hero.attack(enemy)
-            enemy.attack(hero)
+            print('Invalid choice, please try again')
 
-            hero.health_bar.draw()
-            enemy.health_bar.draw()
-            input()
+def start_story():
+    os.system('clear')
+    print('What is your name hero?\n')
+    name = input('').lower()
+    player = Player(health=100, max_hit=max_hit, name=name)
+    enemy = Player(health=100, max_hit=8, name="Goblin")
+    print(f"Stranger: This is a dangerous world you have travelled to {name}")
+    time.sleep(1)
+    print(f"Stranger: There are many dangerous enemies in this land.")
+    time.sleep(1)
+    print("Stranger: I urge you to speak to Thelemos, in the guild hall.")
+    time.sleep(1)
+    print('Stranger: Thelemos is our bravest adventurer. You\'ll need his advice')
+    time.sleep(1)
+    print('[T]ravel [S]hop [M]enu [B]ag [Q]uit')
+    value = input(f'{name}: ').lower()
+    if value == "T" or value == "Travel":
+        pass #Then we travel
+    elif value == "S" or value == "Shop":
+        pass #Enter the shop
+    elif value == "B" or value == 'Bag':
+        pass #Enter inventory
+    elif value == 'Q' or value == 'Quit':
+        time.sleep(1)
+        print(f"Saving and quitting...")
+        sys.exit()
+    else:
+        print('Invalid option.')
 
-    while play:
-        save()
+def slow_print(text, delay=0.05):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
+        print('It has been many ages before a hero ventured here.....')
+        time.sleep(1)
+        print('My name is Aeromax, I was one like you... ')  
 
-        dest = input("")
 
-        if dest == "0":
-            play = False
-            menu = True
-            save()
+def rules():
+    os.system('clear')
+    time.sleep(1)
+    print("---------Welcome to MageQuest---------")
+    print('|                                     |')
+    print('|    This is a simple text rpg        |') 
+    print('|    Type the command or letter       |')
+    print('|    contained in brackets [] to      |')
+    print('|    play the game. Good luck hero!   |')
+    print('|                                     |')
+    print('|-------------------------------------|')
+    print('Press any key to return to the menu')
+    choice = input()
+    if choice == "":
+        start()
+
+if __name__ == '__main__':
+    start()

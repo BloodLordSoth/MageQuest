@@ -1,17 +1,30 @@
 import os
-from chars import Hero, Enemy
-from weapons import short_bow, iron_sword
+import sys
+from player import Player
 
-hero = Hero(name="Hero", health = 100)
-hero.equip(iron_sword)
-enemy = Enemy(name="Enemy", health = 100, weapon=short_bow)
+def combat(player, enemy):
+    os.system('clear')
+    while player.health > 0 and enemy.health > 0:
+        print("Pick an action?\n")
+        choice = input('[Attack] [Cast] [Run]: \n')
+        if choice  == 'attack' or choice == 'A':
+            player.hit(enemy)
+            if enemy.health > 0:
+                enemy.hit(player)
+            player.get_status()
+            enemy.get_status()
+        elif choice == 'cast':
+            spells()
+        elif choice == 'run':
+            print(f"{player.name} has run away")
+            sys.exit()
+        else:
+            print("Invalid input, please type fight or run")
+    
+    if player.health < 0:
+        print(f'Oh no, {player.name} has been slain')
+    elif enemy.health < 0:
+        print(f'{enemy.name} has been slain!')
 
-while True:
-    os.system("clear")
-    hero.attack(enemy)
-    enemy.attack(hero)
-
-    hero.health_bar.draw()
-    enemy.health_bar.draw()
-
-    input()
+def spells(player, enemy):
+    pass
