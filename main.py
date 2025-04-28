@@ -23,74 +23,121 @@ def start():
     print('')
     print('')
     print('')
-    print('Main menu: [1]New Game [2]Load Game [3]Game rules [4]Quit:\n')
+    print('[N]ew Game')
+    print('[L]oad game')
+    print('[G]ame rules')
+    print('[Q]uit')
+    print('---------------')
     run = True
     
     while run:
-        menu = input(': ')
-        if menu == '1' or menu == "N" or menu == 'New Game':
+        menu = input('Command: ')
+        if menu == "N" or menu == 'New Game':
+            run = False
             start_story()
-        elif menu == '3' or menu == 'G' or menu == 'Game rules':
+        elif menu == 'L' or menu == "Load Game":
+            with open('savefile.txt', 'r') as f:
+                load_list = f.readlines()
+                name = load_list[0]
+                health = load_list[1]
+                max_hit = load_list[2]
+                print(name, health, max_hit)
+        elif menu == 'G' or menu == 'Game rules':
             rules()
-        elif menu == '4' or menu == 'Q' or menu == 'Quit':
+        elif menu == 'Q' or menu == 'Quit':
             sys.exit()
+        elif menu == '77':
+            grand_dragon()
         else:
             print('Invalid choice, please try again')
 
+    
+
+
 def start_story():
     os.system('clear')
-    print('What is your name hero?\n')
-    name = input('').lower()
-    player = Player(health=100, max_hit=max_hit, name=name)
-    enemy = Player(health=100, max_hit=8, name="Goblin")
-    print(f"Stranger: This is a dangerous world you have travelled to {name}")
-    time.sleep(1)
-    print(f"Stranger: There are many dangerous enemies in this land.")
-    time.sleep(1)
-    print("Stranger: I urge you to speak to Thelemos, in the guild hall.")
-    time.sleep(1)
-    print('Stranger: Thelemos is our bravest adventurer. You\'ll need his advice')
-    time.sleep(1)
-    print('[T]ravel [S]hop [M]enu [B]ag [Q]uit')
-    value = input(f'{name}: ').lower()
-    if value == "T" or value == "Travel":
-        pass #Then we travel
-    elif value == "S" or value == "Shop":
-        pass #Enter the shop
-    elif value == "B" or value == 'Bag':
-        pass #Enter inventory
-    elif value == 'Q' or value == 'Quit':
-        time.sleep(1)
-        print(f"Saving and quitting...")
-        sys.exit()
-    else:
-        print('Invalid option.')
+    print(slow_print('What is your name hero?\n'))
+    name = input('')
+    player = Player(health=100, max_hit=max_hit, name=name, max_health=100)
+    os.system('clear')
+    print(f'{name}')
+    print('--------')
+    print(f'{player.health} / {player.max_health}')
+    print(f'Max hit: {max_hit}')
+    print('')
+    print('')
+    print('')
+    print('')
+    print('[T]ravel')
+    print('[S]hop')
+    print('[M]enu')
+    print('[B]ag')
+    print('[Q]uit')
+    save(name, player.health, player.max_hit)
+    run = True
+    while run:
+        value = input(f'Command: ')
+        if value == "T" or value == "Travel":
+            pass #Then we travel
+        elif value == "S" or value == "Shop":
+            pass #Goes to shop
+        elif value == 'M' or value == 'Menu':
+            run = False
+            start()
+        elif value == "B" or value == 'Bag':
+            pass #Enter inventory
+        elif value == 'Q' or value == 'Quit':
+            time.sleep(1)
+            save()
+            print(slow_print("Saving and quitting..."))
+            sys.exit()
+        else:
+            print(slow_print('Invalid option.'))
+
+def save(name, health, max_hit):
+    list = [
+        name,
+        str(health),
+        str(max_hit),
+    ]
+    with open('savefile.txt', 'w') as f:
+        for item in list:
+            f.write(item + '\n')
+
+
+def grand_dragon():
+    os.system('clear')
+    print(load_ascii_art('images/granddragon.txt'))
 
 def slow_print(text, delay=0.05):
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
-        time.sleep(delay)
-        print('It has been many ages before a hero ventured here.....')
-        time.sleep(1)
-        print('My name is Aeromax, I was one like you... ')  
+        time.sleep(delay) 
 
 
 def rules():
     os.system('clear')
     time.sleep(1)
-    print("---------Welcome to MageQuest---------")
-    print('|                                     |')
-    print('|    This is a simple text rpg        |') 
-    print('|    Type the command or letter       |')
-    print('|    contained in brackets [] to      |')
-    print('|    play the game. Good luck hero!   |')
-    print('|                                     |')
-    print('|-------------------------------------|')
-    print('Press any key to return to the menu')
+    with open('rules.txt', 'r') as f:
+        print(f.read())
     choice = input()
     if choice == "":
         start()
+
+def load_ascii_art(filepath):
+    try:
+        with open(filepath, 'r') as file:
+            return file.read()
+    except FileNotFoundError:
+        return "Art not found."
+
+def slow_print(text, delay=0.03):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
+    
 
 if __name__ == '__main__':
     start()
