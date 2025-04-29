@@ -1,23 +1,13 @@
 import os
 import sys
 import time
-import combat
-from player import Player
+from player import *
 from values import max_hit
 
 def start():
     os.system('clear')
-    time.sleep(1)
-    print('##########################################################################################################')
-    print('#               ███╗   ███╗ █████╗  ██████╗ ███████╗ ██████╗ ██╗   ██╗███████╗███████╗████████╗          #')
-    print('#               ████╗ ████║██╔══██╗██╔════╝ ██╔════╝██╔═══██╗██║   ██║██╔════╝██╔════╝╚══██╔══╝          #')
-    print('#               ██╔████╔██║███████║██║  ███╗█████╗  ██║   ██║██║   ██║█████╗  ███████╗   ██║             #')  
-    print('#               ██║╚██╔╝██║██╔══██║██║   ██║██╔══╝  ██║▄▄ ██║██║   ██║██╔══╝  ╚════██║   ██║             #')  
-    print('#               ██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗╚██████╔╝╚██████╔╝███████╗███████║   ██║             #')  
-    print('#               ╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝ ╚══▀▀═╝  ╚═════╝ ╚══════╝╚══════╝   ╚═╝             #')
-    print('#                                                                       BloodLordSoth production         #')
-    print('##########################################################################################################')
-    time.sleep(3)
+    time.sleep(2)
+    load_ascii_art('images/intro.txt')
     print('')
     print('')
     print('')
@@ -31,7 +21,7 @@ def start():
     run = True
     
     while run:
-        menu = input('Command: ')
+        menu = input('> ')
         if menu == "N" or menu == 'New Game':
             run = False
             start_story()
@@ -53,21 +43,18 @@ def start():
 
     
 
-
+    
 def start_story():
+    from combat import enter_combat
+    
     os.system('clear')
-    print(slow_print('What is your name hero?\n'))
-    name = input('')
-    player = Player(health=100, max_hit=max_hit, name=name, max_health=100)
+    slow_print('What is your name hero?\n')
+    name = input('> ')
+    
+    player = Player(health=100, max_hit=max_hit, name=name, max_health=100, mana=100, max_mana=100)
+    minotaur = Player(health=200, max_hit=14, name='Minotaur', max_health=200, mana=None, max_mana=None)
     os.system('clear')
-    print(f'{name}')
-    print('--------')
-    print(f'{player.health} / {player.max_health}')
-    print(f'Max hit: {max_hit}')
-    print('')
-    print('')
-    print('')
-    print('')
+    player_window(name, player)
     print('[T]ravel')
     print('[S]hop')
     print('[M]enu')
@@ -76,7 +63,7 @@ def start_story():
     save(name, player.health, player.max_hit)
     run = True
     while run:
-        value = input(f'Command: ')
+        value = input(f'> ')
         if value == "T" or value == "Travel":
             pass #Then we travel
         elif value == "S" or value == "Shop":
@@ -88,11 +75,14 @@ def start_story():
             pass #Enter inventory
         elif value == 'Q' or value == 'Quit':
             time.sleep(1)
-            save()
-            print(slow_print("Saving and quitting..."))
+            save(name, player.health, player.max_hit)
+            slow_print("Saving and quitting...")
             sys.exit()
+        elif value == 'minotaur':
+            run = False
+            enter_combat(player, minotaur)
         else:
-            print(slow_print('Invalid option.'))
+            print('Invalid option.')
 
 def save(name, health, max_hit):
     list = [
@@ -107,7 +97,8 @@ def save(name, health, max_hit):
 
 def grand_dragon():
     os.system('clear')
-    print(load_ascii_art('images/granddragon.txt'))
+    time.sleep(1)
+    load_ascii_art('images/granddragon.txt')
 
 def slow_print(text, delay=0.05):
     for char in text:
@@ -128,7 +119,7 @@ def rules():
 def load_ascii_art(filepath):
     try:
         with open(filepath, 'r') as file:
-            return file.read()
+            print(file.read())
     except FileNotFoundError:
         return "Art not found."
 
@@ -137,6 +128,13 @@ def slow_print(text, delay=0.03):
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(delay)
+
+def slow_print_dragon(text, delay=0.01):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
+        print()
     
 
 if __name__ == '__main__':
