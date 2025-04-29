@@ -8,6 +8,6 @@ and plan on finishing this up slowly.
 <br>
 4/28: Working on the combat system, and added spells! Mostly working on functionality. This<br>
 is shaping up to be quite a project. This is less of a readme, and more of a log.<br>
-After typing your name, typing minotaur will start the minotaur battle.
+After typing your name, typing minotaur will start the minotaur battle. I got this!<br>
 <br>
 -BloodLordSoth
