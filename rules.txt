@@ -7,29 +7,32 @@
 |           |_|  |_|\__,_|\__, |\___|\__\_\\__,_|\___||___/\__| |_| \_\\__,_|_|\___||___/           |
 |                         |___/                                                                     |           
 |---------------------------------------------------------------------------------------------------|
-                     __                                           __
-                    (**)                                         (**)
-                    IIII                                         IIII
-                    ####                                         ####
-                    HHHH        Welcome to MageQuest Hero!       HHHH
-                    HHHH    The people of Illinor need help!     HHHH
-                    ####    The Grand Dragon has taken up        ####
-                 ___IIII___       residence near by.          ___IIII___
-              .-`_._"**"_._`-.       Chaos reigns          .-`_._"**"_._`-.
-             |/``  .`\/`.  ``\|     and evil rules.       |/``  .`\/`.  ``\|
-`                  }    {     '  The rules are easy       `     }    {     '
-                   ) () (      Type in the letter to the        ) () (
-                   ( :: )        corresponding command.         ( :: )
-                   | :: |       Good luck adventurer!           | :: |
-                   | )( |    This land needs a hero like bad.   | )( |
-                   | || |                                       | || |
-                   | || |                      -BloodLordSoth   | || |
-                   | || |                                       | || |
-                   | || |                                       | || |
-                   | || |                                       | || |
-                   ( () )                                       ( () )
-                    \  /                                         \  /
-                     \/                                           \/
+                     __                                            __
+                    (**)                                          (**)
+                    IIII                                          IIII
+                    ####                                          ####
+                    HHHH        Welcome to MageQuest Hero!        HHHH
+                    HHHH    The people of Illinor need help!      HHHH
+                    ####    The Grand Dragon has taken up         ####
+                 ___IIII___       residence near by.           ___IIII___
+              .-`_._"**"_._`-.       Chaos reigns           .-`_._"**"_._`-.
+             |/``  .`\/`.  ``\|     and evil rules.        |/``  .`\/`.  ``\|
+`                  }    {     '  The rules are easy        `     }    {     '
+                   ) () (      Type in the letter to the         ) () (
+                   ( :: )        corresponding command.          ( :: )
+                   | :: |       Good luck adventurer!            | :: |
+                   | )( |    This land needs a hero like bad.    | )( |
+                   | || |                                        | || |
+                   | || |                      -BloodLordSoth    | || |
+                   | || |                                        | || |
+                   | || |                                        | || |
+                   | || |                                        | || |
+                   ( () )                                        ( () )
+                    \  /                                          \  /
+                     \/                                            \/
    
 
+    
+    
+    
     press enter to continue

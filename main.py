@@ -10,9 +10,6 @@ def start():
     load_ascii_art('images/intro.txt')
     print('')
     print('')
-    print('')
-    print('')
-    print('')
     print('[N]ew Game')
     print('[L]oad game')
     print('[G]ame rules')
@@ -22,7 +19,7 @@ def start():
     
     while run:
         menu = input('> ')
-        if menu == "N" or menu == 'New Game':
+        if menu == "N" or menu == 'New Game' or menu == 'n':
             run = False
             start_story()
         elif menu == 'L' or menu == "Load Game":
@@ -31,13 +28,12 @@ def start():
                 name = load_list[0]
                 health = load_list[1]
                 max_hit = load_list[2]
-                print(name, health, max_hit)
+                mana = load_list[3]
+                print(name, health, max_hit, mana)
         elif menu == 'G' or menu == 'Game rules':
             rules()
         elif menu == 'Q' or menu == 'Quit':
             sys.exit()
-        elif menu == '77':
-            grand_dragon()
         else:
             print('Invalid choice, please try again')
 
@@ -60,7 +56,6 @@ def start_story():
     print('[M]enu')
     print('[B]ag')
     print('[Q]uit')
-    save(name, player.health, player.max_hit)
     run = True
     while run:
         value = input(f'> ')
@@ -75,7 +70,6 @@ def start_story():
             pass #Enter inventory
         elif value == 'Q' or value == 'Quit':
             time.sleep(1)
-            save(name, player.health, player.max_hit)
             slow_print("Saving and quitting...")
             sys.exit()
         elif value == 'minotaur':
@@ -84,28 +78,22 @@ def start_story():
         else:
             print('Invalid option.')
 
-def save(name, health, max_hit):
+def save(player):
     list = [
-        name,
-        str(health),
-        str(max_hit),
+        player.name,
+        str(player.health),
+        str(player.max_hit),
+        str(player.mana),
     ]
     with open('savefile.txt', 'w') as f:
         for item in list:
             f.write(item + '\n')
-
-
-def grand_dragon():
-    os.system('clear')
-    time.sleep(1)
-    load_ascii_art('images/granddragon.txt')
 
 def slow_print(text, delay=0.05):
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(delay) 
-
 
 def rules():
     os.system('clear')
@@ -128,14 +116,7 @@ def slow_print(text, delay=0.03):
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(delay)
-
-def slow_print_dragon(text, delay=0.01):
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(delay)
-        print()
-    
+   
 
 if __name__ == '__main__':
     start()

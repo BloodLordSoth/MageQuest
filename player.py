@@ -35,6 +35,7 @@ class Player():
         if self.mana >= fireball.mana_cost:
             self.mana -= fireball.mana_cost
             damage = random.randint(1, fireball.damage)
+            slow_print(f'{self.name} deals {fireball.damage} damage to the {target.name}\n')
             target.get_hit(damage)
         else:
             slow_print('You are low on mana\n')
