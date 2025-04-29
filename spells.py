@@ -1,3 +1,5 @@
+import random
+
 class Spells():
     def __init__(self, name, damage, mana_cost, healing):
         self.name = name
@@ -5,8 +7,13 @@ class Spells():
         self.mana_cost = mana_cost
         self.healing = healing
 
+    def get_damage(self):
+        bonus_damage = random.randint(0, 20)
+        return self.damage + bonus_damage
+
+
 #Fire
-fireball = Spells(name="Fireball", damage=15, mana_cost=10, healing=0)
+fireball = Spells(name="Fireball", damage=5, mana_cost=10, healing=0)
 fire_strike = Spells(name="Fire Strike", damage=30, mana_cost=15, healing=0)
 fire_storm = Spells(name="Fire Storm", damage=60, mana_cost=30, healing=0)
 
@@ -14,6 +21,7 @@ fire_storm = Spells(name="Fire Storm", damage=60, mana_cost=30, healing=0)
 freeze = Spells(name="Freeze", damage=15, mana_cost=10, healing=0)
 blizzard = Spells(name="Blizzard", damage=30, mana_cost=15, healing=0)
 ice_spire = Spells(name="Ice Spire", damage=60, mana_cost=30, healing=0)
+
 
 #Necromancy
 corrosion = Spells(name="Corrosion", damage=10, mana_cost=10, healing=0)

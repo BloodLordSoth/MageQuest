@@ -41,16 +41,15 @@ def start():
 
     
 def start_story():
-    from combat import enter_combat
+    from combat import minotaur_combat
     
     os.system('clear')
     slow_print('What is your name hero?\n')
     name = input('> ')
     
-    player = Player(health=100, max_hit=max_hit, name=name, max_health=100, mana=100, max_mana=100)
-    minotaur = Player(health=200, max_hit=14, name='Minotaur', max_health=200, mana=None, max_mana=None)
+    self = Player(health=100, max_hit=max_hit, name=name, max_health=100, mana=100, max_mana=100, gold=0)
+    target = Player(health=200, max_hit=14, name='Minotaur', max_health=200, mana=None, max_mana=None, gold=300)
     os.system('clear')
-    player_window(name, player)
     print('[T]ravel')
     print('[S]hop')
     print('[M]enu')
@@ -72,18 +71,18 @@ def start_story():
             time.sleep(1)
             slow_print("Saving and quitting...")
             sys.exit()
-        elif value == 'minotaur':
+        elif value == 'minotaur' or value == 'min':
             run = False
-            enter_combat(player, minotaur)
+            minotaur_combat(self, target)
         else:
             print('Invalid option.')
 
-def save(player):
+def save(self):
     list = [
-        player.name,
-        str(player.health),
-        str(player.max_hit),
-        str(player.mana),
+        self.name,
+        str(self.health),
+        str(self.max_hit),
+        str(self.mana),
     ]
     with open('savefile.txt', 'w') as f:
         for item in list:

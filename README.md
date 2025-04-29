@@ -10,4 +10,6 @@ and plan on finishing this up slowly.
 is shaping up to be quite a project. This is less of a readme, and more of a log.<br>
 After typing your name, typing minotaur will start the minotaur battle. I got this!<br>
 <br>
+4/29: Working on weapons and the weapon shop. Added Ice Spire and improved the minotaur<br>
+battle sequence. It's now contained within the loop so the values refresh.
 -BloodLordSoth
