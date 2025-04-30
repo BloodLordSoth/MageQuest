@@ -9,15 +9,16 @@ def axe_shop(self):
         os.system('clear')
         time.sleep(1)
         load_ascii_art('images/axes.txt')
-        print('What item would you like to purchase?\n')
+        print(f'Type the number to purchase the item | current gold: {self.gold}\n')
+        print(f'Type back to return to the shop\n')
         value = input('> ')
         if value == '1' or value == "hatchet":
             self.buy_hatchet()
             time.sleep(1)
             for wep in self.weapons:
                 slow_print(f'{wep.name} has been added to the inventory\n')
-            time.sleep(1)
-            shop(self)
+                time.sleep(0.5)
+                slow_print(f'{self.name} has {self.gold} left\n')
         elif value == 'sword' or value == 'Sword':
             slow_print('I don\'t have any in stock\n')
         elif value == 'back':

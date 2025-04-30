@@ -32,9 +32,8 @@ class Player():
         if self.gold >= hatchet.cost:
             self.gold -= hatchet.cost
             self.weapons.append(hatchet)
-            slow_print('You have purchased the hatchet')
         else:
-            slow_print('You don\'nt have enough gold')
+            slow_print('You don\'nt have enough gold\n')
 
     def get_healed(self, healing):
         self.health += healing
