@@ -1,6 +1,4 @@
-import os
-import sys
-import time
+import os, time, sys
 from main import slow_print, load_ascii_art, save
 from spells import *
 
@@ -56,9 +54,9 @@ def minotaur_combat(self, target):
 def min_part2(self, target):
     os.system('clear')
     time.sleep(1)
-    slow_print('The minotaur enrages unleashing his fury.\n')
+    slow_print('\033[91mThe minotaur enrages unleashing his fury.\033[0m\n')
     time.sleep(1)
-    slow_print('the minotaur lets out a tremendous roar in his rage....\n')
+    slow_print('\033[91mthe minotaur lets out a tremendous roar in his rage....\033[0m\n')
     time.sleep(1)
 
     loop = True
@@ -93,10 +91,16 @@ def min_part2(self, target):
         else:
             slow_print("Invalid input, please type fight or run\n")
 
-    if self.health < 0:
-        death(self, target)
-    elif target.health < 0:
-        slow_print(f'{target.name} has been slain!')
+        if self.health <= 0:
+            death(self, target)
+
+        if target.health <= 0:
+            loop = False
+            os.system('clear')
+            time.sleep(1)
+            slow_print(f'{target.name} has been slain!\n')
+            time.sleep(1)
+            slow_print(f'{self.name} has been awarded {target.gold} gold!\n')
 
 def item_list(self):
     print('Which item would you like to use?\n')

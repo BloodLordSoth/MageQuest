@@ -1,8 +1,6 @@
-import random
-import time
+import random, time
 from spells import *
 from weapons import *
-from values import max_hit
 from main import slow_print
 
 class Player():
@@ -18,18 +16,23 @@ class Player():
         self.weapons = []
         self.inventory = {}
     
+    def get_gold(self, target):
+        gold_loot = random.randint(30, target.gold)
+        self.gold += gold_loot
+    
+    def magic_gold(self):
+        self.gold += 30_000
+
     def get_hit(self, damage):
         self.health -= damage
-    
-    def spend_gold(self):
-        pass
-    
-    def buy_axe(self):
-        axe = Weapon(name="Battle Axe", damage=20, cost=20)
-        if self.gold >= axe.cost:
-            self.gold -= axe.cost
-            self.weapons += axe
-            slow_print('You have purchased the Battle Axe')
+
+
+    def buy_hatchet(self):
+        hatchet = Weapon(name="hatchet", damage=20, cost=20)
+        if self.gold >= hatchet.cost:
+            self.gold -= hatchet.cost
+            self.weapons.append(hatchet)
+            slow_print('You have purchased the hatchet')
         else:
             slow_print('You don\'nt have enough gold')
 
@@ -54,23 +57,14 @@ class Player():
     def cast_spell(self, spells, target):
         if self.mana >= spells.mana_cost:
             self.mana -= spells.mana_cost
-            damage = spells.get_damage
-            target.get_hit(spells.damage)
-            time.sleep(0.5)
-            slow_print(f"{self.name} casts {spells.name} at {target.name} for {spells.damage} damage!\n")
-            time.sleep(0.5)
-        else:
-            slow_print(f"{self.name} doesn't have enough mana to cast {spells.name}!")
-
-    def fireball(self, target):
-        fireball = Spells(name="Fireball", damage=15, mana_cost=10, healing=0)
-        if self.mana >= fireball.mana_cost:
-            self.mana -= fireball.mana_cost
-            damage = random.randint(1, fireball.damage)
-            slow_print(f'{self.name} deals {fireball.damage} damage to the {target.name}\n')
+            damage = random.randint(1, spells.damage)
             target.get_hit(damage)
+            time.sleep(0.5)
+            slow_print(f"{self.name} casts {spells.name} at {target.name} for {damage} damage!\n")
+            time.sleep(0.5)
         else:
-            slow_print('You are low on mana\n')
+            slow_print(f"{self.name} doesn't have enough mana to cast {spells.name}!\n")
+
         
     def ice_spire(self, target):
         ice_spire = Spells(name="Ice Spire", damage=60, mana_cost=30, healing=0)

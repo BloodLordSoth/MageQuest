@@ -1,0 +1,14 @@
+             . .           _                          .
+             |           ( | )         / \|/ \       .` \_/ `.          __
+             |            `|`          \_/|\_/       .   #   .        .`  `//``.
+          1                |              |           `./#\.`         .   //   .
+                            2 |           |              #             ``//\_.`
+                                        3 |              #              //
+                                                         #             //
+                                                      4. #         5. //
+	
+	          1. Hatchet - 20 gold                      
+	          2. Double Axe - 60 gold
+	          3. Great Axe - 200 gold
+	          4. Battle Axe - 620 gold
+	          5. Axe of Algor - 2200 gold

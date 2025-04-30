@@ -1,20 +1,28 @@
-import os
-import time
+import os, time
 from weapons import *
-from main import load_ascii_art, slow_print
 
-def weapon_shop(self):
-    shop = True
-    while shop:
+def axe_shop(self):
+    from main import load_ascii_art, slow_print
+    from shop import shop
+    value = True
+    while value:
         os.system('clear')
-        load_ascii_art('images/weaponshop.txt')
+        time.sleep(1)
+        load_ascii_art('images/axes.txt')
         print('What item would you like to purchase?\n')
-        choice = input('> ')
-        if choice == 'axe' or choice == "Axe":
-            pass
-        elif choice == 'sword' or choice == 'Sword':
-            pass
+        value = input('> ')
+        if value == '1' or value == "hatchet":
+            self.buy_hatchet()
+            time.sleep(1)
+            for wep in self.weapons:
+                slow_print(f'{wep.name} has been added to the inventory\n')
+            time.sleep(1)
+            shop(self)
+        elif value == 'sword' or value == 'Sword':
+            slow_print('I don\'t have any in stock\n')
+        elif value == 'back':
+            shop(self)
         else:
-            slow_print('Invalid option, try again')
+            slow_print('Invalid option, try again\n')
 
 
