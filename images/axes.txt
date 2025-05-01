@@ -6,9 +6,15 @@
                                         3 |              #              //
                                                          #             //
                                                       4. #         5. //
-	
-	          1. Hatchet - 20 gold                      
-	          2. Double Axe - 60 gold
-	          3. Great Axe - 200 gold
-	          4. Battle Axe - 620 gold
-	          5. Axe of Algor - 2200 gold
+         
+         /-/^(o.o)^\ /^(o.o)^\ /^(o.o)^\ /^(o.o)^\ /^(o.o)^\ /^(o.o)^\/^(o.o)^\ /^(o.o)^\|\ 
+         | |____________/Weapon\_____________________________/Weapon Stats\______________| |
+	 | |                                                                             | |
+         | |  1. Hatchet - 20 gold           | +1-5 str / +2 min hit                     | |
+	 | |  2. Double Axe - 60 gold        | +5-10 str / +2-6 min hit                  | |
+	 | |  3. Great Axe - 200 gold        | +20-30 str / +2-10 min hit / +10 health   | |
+	 | |  4. Battle Axe - 620 gold       | +30-40 str / +5-12 min hit / +8-18 health | |
+	 | |  5. Dragon Bane - 2200 gold     | +50 str / +15 min hit / +20 health        | |
+         | |                                          (Chance to double-hit)             | |
+         |_/^(o.o)^\ /^(o.o)^\ /^(o.o)^\ /^(o.o)^\ /^(o.o)^\ /^(o.o)^\ /^(o.o)^\ /^(o.o)^\_| 
+           

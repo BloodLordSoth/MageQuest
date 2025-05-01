@@ -1,4 +1,11 @@
-Bunnypie
+Plok
 100
 10
 100
+100
+100
+100
+0
+[<spells.Spells object at 0x7fb1649e9220>, <spells.Spells object at 0x7fb1649e9400>, <spells.Spells object at 0x7fb1649e9310>]
+{}
+[]

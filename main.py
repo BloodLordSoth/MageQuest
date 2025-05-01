@@ -1,4 +1,4 @@
-import os, sys, time
+import os, sys, time, json
 from player import *
 from values import max_hit
 
@@ -18,14 +18,10 @@ def start():
         if menu == "N" or menu == 'New Game' or menu == 'n':
             run = False
             get_name()
-        elif menu == 'L' or menu == "Load Game":
-            with open('savefile.txt', 'r') as f:
-                load_list = f.readlines()
-                name = load_list[0]
-                health = load_list[1]
-                max_hit = load_list[2]
-                mana = load_list[3]
-                print(name, health, max_hit, mana)
+        elif menu == 'L' or menu == "Load Game" or menu == 'l':
+            if os.path.exists("savefile.json"):
+                player = load()
+                wizard_return(player)
         elif menu == 'G' or menu == 'Game rules' or menu == 'g' or menu == 'game rules':
             rules()
         elif menu == 'Q' or menu == 'Quit' or menu == 'q' or menu == 'quit':
@@ -34,6 +30,24 @@ def start():
             print('Invalid choice, please try again')
 
     
+def load():
+    with open('savefile.json', 'r') as f:
+        data = json.load(f)
+
+    player = Player(
+        health=data["health"],
+        max_hit=data["max_hit"],
+        name=data["name"],
+        max_health=data["max_health"],
+        mana=data["mana"],
+        max_mana=data["max_mana"],
+        gold=data["gold"]
+    )
+
+    player.spells = [Spells.from_dict(s) for s in data["spells"]]
+    player.inventory = data["inventory"]
+    # You would also reconstruct weapons here if you store weapon attributes
+    return player
 
     
 def get_name():
@@ -45,75 +59,116 @@ def get_name():
     time.sleep(0.5)
     loop = True
     while True:
-        slow_print('So. What is your name traveler?\n')
+        slow_print('So, tell me, what is your name traveler?\n')
         name = input('> ')
+        if len(name) > 16 - 1:
+            slow_print('Too many characters. Please use 15 or less')
+            get_name()
+        player = Player(
+            health=100,
+            max_hit=10,
+            name=name,
+            max_health=100,
+            mana=100,
+            max_mana=100,
+            gold=0
+        )
         slow_print(f'Are you sure you sure it\'s {name}?\n')
-        print('[Y]es or [N]o')
+        print('\033[92m[Y]es\033[0m or \033[91m[N]o\033[0m')
         option = input('> ')
         if option == 'y' or option == 'yes' or option == 'Y' or option == 'Yes':
             loop = False
-            intro(name)
+            save(player)
+            intro(player)
         elif option == 'n' or option == 'no' or option == 'No' or option =='N':
             get_name()
     
         
         os.system('clear')
 
-def intro(name):
-    self = Player(health=100, max_hit=max_hit, name=name, max_health=100, mana=100, max_mana=100, gold=0)
-    os.system('clear')
+def intro(player):
+    #os.system('clear')
+    #time.sleep(1)
+    #slow_print('You\'re probably wondering who I am, I would if I were you\n')
+    #time.sleep(1)
+    #slow_print('My name is Arabast, I\'m one of the elder wizards in the capital.\n')
+    #time.sleep(1)
+    #slow_print('While normally I reside in the Black Tower, today, I was called to town.\n')
+    #time.sleep(1)
+    #os.system('clear')
+    #slow_print(f'Looking at you there, {name}, I know why.\n')
+    #time.sleep(1)
+    #slow_print('Here in \033[96mFeldor\033[0m, the citizens are ruled over by the \033[96mking-wizards\033[0m.\n')
+    #time.sleep(1)
+    #slow_print('A \033[96mking-wizard\033[0m from the Tower of Guilded Light...\n')
+    #time.sleep(1)
+    #slow_print('and a \033[96mking-wizard\033[0m from the depths of the inverted Tower of Eternal Darkness\n')
+    #time.sleep(1)
+    #os.system('clear')
+    #slow_print('Two towers working to bring balance to \033[96mFeldor\033[0m, though not in harmony\n')
+    #time.sleep(1)
+    slow_print(f'Come closer {player.name}, let met have a look at you.\n')
     time.sleep(1)
-    slow_print('You\'re probably wondering who I am, I would if I were you\n')
-    time.sleep(1)
-    slow_print('My name is Arabast, I\'m one of the elder wizards in the capital.\n')
-    time.sleep(1)
-    slow_print('While normally I reside in the Black Tower, today, I was called to town.\n')
-    time.sleep(1)
-    os.system('clear')
-    slow_print(f'Looking at you there, {name}, I know why.\n')
-    time.sleep(1)
-    slow_print('Here in Feldor, the citizens are ruled over by the king-wizards.\n')
-    time.sleep(1)
-    slow_print('A king-wizard from the Tower of Guilded Light...\n')
-    time.sleep(1)
-    slow_print('and a king-wizard from the depths of the inverted Tower of Eternal Darkness\n')
-    time.sleep(1)
-    os.system('clear')
-    slow_print('Two towers working to bring balance to Feldor, though not in harmony\n')
-    time.sleep(1)
-    slow_print(f'Come closer {name}, let met have a look at you.\n')
-    time.sleep(2)
-    wizard_talk(self)
+    save(player)
+    wizard_talk(player)
     
     
-def wizard_talk(self):
+def wizard_talk(player):
     from combat import minotaur_combat
     from shop import shop
-    target = Player(health=100, max_hit=30, name='Minotaur', max_health=100, mana=None, max_mana=None, gold=180)
+
     os.system('clear')
-    slow_print('You approach the elder wizard, and your gaze meets his.\n')
-    time.sleep(1)
-    load_ascii_art('images/wizard.txt')
-    slow_print(f'Yes. Yes. I can sense great power within you {self.name}\n')
-    time.sleep(1)
+    #slow_print('You approach the elder wizard, and your gaze meets his.\n')
+    #time.sleep(1)
+    #load_ascii_art('images/wizard.txt')
+    #slow_print(f'Yes. Yes. I can sense great power within you {self.name}\n')
+    #time.sleep(1)
     slow_print('Tell me, what is it you\'re looking for hero?\n')
-    time.sleep(1)
-    os.system('clear')
+    #time.sleep(1)
+    #os.system('clear')
     loop = True
     while loop:
         load_ascii_art('images/wizard.txt')
         print('')
-        print('[S]hop [C]ombat_Minotaur [B]ag [A]bilities\n')
+        print('|\ [S]hop /\ [C]ombat Minotaur /\ [B]ag /\ [A]bilities /|\n')
         menu = input('> ')
         if menu == 'c' or menu == 'combat' or menu == 'C' or menu == 'Combat':
             loop = False
             time.sleep(1)
             slow_print('Teleporting you now, good luck hero!\n')
             time.sleep(1)
-            minotaur_combat(self, target)
+            minotaur_combat(player)
         if menu == 's' or menu == 'S' or menu == 'shop' or menu == 'Shop':
             loop = False
-            shop(self)
+            shop(player)
+
+def wizard_return(player):
+        from combat import drider_combat
+        from shop import shop
+        os.system('clear')
+        wiz_loop = True
+        while wiz_loop:
+            load_ascii_art('images/wizard.txt')
+            time.sleep(1)
+            slow_print(f'Ah, Good to have you back {player.name}\n')
+            time.sleep(0.5)
+            print('')
+            print(f'\ [S]hop /\ [C]ombat Dragon-Rider /\ [B]ag /\ [A]bilities /\ [Q]uit Game /||\ \033[93mGold\033[0m: {player.gold} /\n')
+            menu = input('> ')
+            if menu == 'c' or menu == 'combat' or menu == 'C' or menu == 'Combat':
+                wiz_loop = False
+                time.sleep(1)
+                slow_print('The wizard smirks....')
+                time.sleep(1)
+                slow_print(f'Teleporting you now hero, good luck. you\'ll need it this time {player.name}\n')
+                time.sleep(1)
+                drider_combat(player)
+            elif menu == 's' or menu == 'S' or menu == 'shop' or menu == 'Shop':
+                wiz_loop = False
+                shop(player)
+            elif menu == 'q' or menu == 'Q' or menu == 'quit' or menu == 'Quit':
+                wiz_loop = False
+                quit()
 
         else:
             slow_print('Function hasn\'t been added yet\n')
@@ -142,16 +197,22 @@ def menu(self, target):
         else:
             print('Invalid option.')
 
-def save(self):
-    list = [
-        self.name,
-        str(self.health),
-        str(self.max_hit),
-        str(self.mana),
-    ]
-    with open('savefile.txt', 'w') as f:
-        for item in list:
-            f.write(item + '\n')
+def save(player):
+    save_data = {
+        "name": player.name,
+        "health": player.health,
+        "max_hit": player.max_hit,
+        "mana": player.mana,
+        "max_health": player.max_health,
+        "max_mana": player.max_mana,
+        "gold": player.gold,
+        "spells": [spell.to_dict() for spell in player.spells],
+        "inventory": player.inventory,
+        "weapons": [weapon.name for weapon in player.weapons]  # assuming weapon is an object
+    }
+
+    with open('savefile.json', 'w') as f:
+        json.dump(save_data, f, indent=2)
 
 def slow_print(text, delay=0.05):
     for char in text:
@@ -174,13 +235,9 @@ def load_ascii_art(filepath):
             print(file.read())
     except FileNotFoundError:
         return "Art not found."
-
-def slow_print(text, delay=0.03):
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(delay)
    
+def color_text(text, color_code):
+    return f"\033[{color_code}m{text}\033[0m"
 
 if __name__ == '__main__':
     start()

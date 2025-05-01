@@ -1,8 +1,10 @@
 import os, time, sys
-from main import slow_print, load_ascii_art, save
+from main import slow_print, load_ascii_art, save, wizard_return, save, load, color_text
 from spells import *
+from player import *
 
-def minotaur_combat(self, target):
+def minotaur_combat(player):
+    target = Player(health=100, max_hit=30, name='Minotaur', max_health=100, mana=None, max_mana=None, gold=180)
     os.system('clear')
     slow_print('The door opens with a creak, sending chills down your spine.\n')
     time.sleep(1)
@@ -19,24 +21,24 @@ def minotaur_combat(self, target):
         os.system('clear')
         load_ascii_art('images/minotaur.txt')
         print('')
-        print(f'{self.name} | Health: {self.health}/{self.max_health} | Mana: {self.mana}/{self.max_mana} | gold: {self.gold}')
+        print(f'{player.name} | \033[91mHealth:\033[0m {player.health}/{player.max_health} | \033[94mMana:\033[0m {player.mana}/{player.max_mana} | \033[93mgold\033[0m: {player.gold}')
         print(f'{target.name} | Health: {target.health}/{target.max_health}\n')
-        print(f' [A]ttack [C]ast [I]tem [S]ave [Q]uit: \n')
+        print(f'|\ [A]ttack /\ [C]ast /\ [I]tem /\ [S]ave /\ [Q]uit: /| \n')
         choice = input('> ')
         if choice  == 'attack' or choice == 'A' or choice == 'a':
-            self.hit(target)
+            player.hit(target)
             if target.health > 0:
-                target.hit(self)
-            self.get_status()
+                target.hit(player)
+            player.get_status()
             target.get_status()
         elif choice == 'cast' or choice == 'C' or choice == 'Cast' or choice == 'c':
-            spell_cast(self, target)
+            spell_cast(player, target)
         elif choice == 'i' or choice == 'I' or choice == 'item' or choice == 'Item':
             pass #item(player)
         elif choice == 'Save' or choice == 's' or choice == 'S' or choice == 'save':
             slow_print('Saving please wait....\n')
             time.sleep(1)
-            save(self)
+            save(player)
         elif choice == 'q' or choice == 'quit' or choice == 'Q' or choice == 'quit':
             slow_print(f"Are you sure you want to quit?\n")
             type = input('> ')
@@ -49,9 +51,9 @@ def minotaur_combat(self, target):
     
         if target.health <= 80:
             loop = False
-            min_part2(self, target)
+            min_part2(player, target)
 
-def min_part2(self, target):
+def min_part2(player, target):
     os.system('clear')
     time.sleep(1)
     slow_print('\033[91mThe minotaur enrages unleashing his fury.\033[0m\n')
@@ -61,26 +63,27 @@ def min_part2(self, target):
 
     loop = True
     while loop:
+        print('\033[91m')
         load_ascii_art('images/minotaur2.txt')
-        print('')
-        print(f'{self.name} | Health: {self.health}/{self.max_health} | Mana: {self.mana}/{self.max_mana} | gold: {self.gold}')
+        print('\033[0m')
+        print(f'{player.name} | \033[91mHealth\033[0m: {player.health}/{player.max_health} | \033[94mMana\033[0m: {player.mana}/{player.max_mana} | \033[93mgold\033[0m: {player.gold}')
         print(f'{target.name} | Health: {target.health}/{target.max_health}\n')
-        print(f' [A]ttack [C]ast [I]tem [S]ave [Q]uit: \n')
+        print(f'|\ [A]ttack /\ [C]ast /\ [I]tem /\ [S]ave /\ [Q]uit: /| \n')
         choice = input('> ')
         if choice  == 'attack' or choice == 'A' or choice == 'a':
-            self.hit(target)
+            player.hit(target)
             if target.health > 0:
-                target.hit(self)
-            self.get_status()
+                target.hit(player)
+            player.get_status()
             target.get_status()
         elif choice == 'cast' or choice == 'C' or choice == 'Cast' or choice == 'c':
-            spell_cast(self, target)
+            spell_cast(player, target)
         elif choice == 'i' or choice == 'I' or choice == 'item' or choice == 'Item':
             pass #item(player)
         elif choice == 'Save' or choice == 's' or choice == 'S' or choice == 'save':
             slow_print('Saving please wait....\n')
             time.sleep(1)
-            save(self)
+            save(player)
         elif choice == 'q' or choice == 'quit' or choice == 'Q' or choice == 'quit':
             slow_print(f"Are you sure you want to quit?\n")
             type = input('> ')
@@ -91,8 +94,8 @@ def min_part2(self, target):
         else:
             slow_print("Invalid input, please type fight or run\n")
 
-        if self.health <= 0:
-            death(self, target)
+        if player.health <= 0:
+            death(player, target)
 
         if target.health <= 0:
             loop = False
@@ -100,11 +103,15 @@ def min_part2(self, target):
             time.sleep(1)
             slow_print(f'{target.name} has been slain!\n')
             time.sleep(1)
-            slow_print(f'{self.name} has been awarded {target.gold} gold!\n')
+            slow_print(f'{player.name} has been awarded {target.gold} \033[93mgold!\033[0m\n')
+            player.get_gold(target)
+            save(player)
+            time.sleep(1)
+            wizard_return(player)
 
-def item_list(self):
+def item_list(player):
     print('Which item would you like to use?\n')
-    print(f'Bag: {self.inventory}')
+    print(f'Bag: {player.inventory}')
     value = input('> ')
     if value == '1':
         pass
@@ -113,46 +120,159 @@ def item_list(self):
     else:
         slow_print('That item isn\'t your inventory.')
 
-def spell_cast(self, target):
+def spell_cast(player, target):
     slow_print('What spell would you like to cast?\n')
-    for spell in self.spells:
+    for spell in player.spells:
         print(f'{spell.name} (Cost: {spell.mana_cost}, Damage: {spell.damage})')
     cast = input('> ')
     if cast == 'fireball':
         time.sleep(0.5)
-        self.cast_spell(fireball, target)
+        player.cast_spell(fireball, target)
         if target.health > 0:
-            target.hit(self)
-        self.get_status()
+            target.hit(player)
+        player.get_status()
         target.get_status()
+        player.reduce_spell_cooldowns()
     elif cast == 'heal' or cast == 'Heal':
         time.sleep(0.5)
-        self.heal()
-        target.hit(self)
-        self.heal_status()
+        player.heal()
+        target.hit(player)
+        player.heal_status()
+        player.reduce_spell_cooldowns()
     elif cast == 'ice spire' or cast == 'Ice spire' or cast == 'Ice Spire':
         time.sleep(0.5)
-        self.cast_spell(ice_spire, target)
+        player.cast_spell(ice_spire, target)
         if target.health > 0:
-            target.hit(self)
-        self.get_status()
+            target.hit(player)
+        player.get_status()
         target.get_status()
+        player.reduce_spell_cooldowns()
     else:
         ('You do\'nt know that spell')
 
-def death(self, target):
+def death(player, target):
     from main import start
     os.system('clear')
     time.sleep(1)
     load_ascii_art('images/death.txt')
     time.sleep(2)
-    slow_print(f'Our hero {self.name} has been laid to rest\n')
+    slow_print(f'Our hero {player.name} has been laid to rest\n')
     time.sleep(1)
     print('Continue? [Y]es or [N]o\n')
     choice = input('> ')
     if choice == 'Y' or choice == "Yes" or choice == 'y' or choice == 'yes':
-        minotaur_combat(self, target)
+        minotaur_combat(player, target)
     elif choice =='N' or choice == 'No' or choice == 'n' or choice == 'no':
         slow_print('Exiting to menu')
         time.sleep(1)
         start()
+
+def drider_combat(player):
+    target = Player(health=200, max_hit=45, name='Dragon Rider', max_health=200, mana=None, max_mana=None, gold=1400)
+    os.system('clear')
+    slow_print('You\'ve reached the top of the tower, the air hangs thick.\n')
+    time.sleep(1)
+    slow_print('The putrid smell of decaying carcasses engulf your senses.\n')
+    time.sleep(1)
+    slow_print('Without having the time to regain your composure.... \n')
+    os.system('clear')
+    time.sleep(1)
+    slow_print('You\'re nearly knocked back from the force of thunderous flapping...\n')
+    time.sleep(1)
+    slow_print('The \033[91mDragon-rider\033[0m emerges....')
+    time.sleep(1)
+    os.system('clear')
+    
+    loop = True
+    while loop:
+        os.system('clear')
+        load_ascii_art('images/dragonrider.txt')
+        print('')
+        print(f'{player.name} | \033[91mHealth:\033[0m {player.health}/{player.max_health} | \033[94mMana:\033[0m {player.mana}/{player.max_mana} | \033[93mgold\033[0m: {player.gold}')
+        print(f'{target.name} | Health: {target.health}/{target.max_health}\n')
+        print(f'|\ [A]ttack /\ [C]ast /\ [I]tem /\ [S]ave /\ [Q]uit: /| \n')
+        choice = input('> ')
+        if choice  == 'attack' or choice == 'A' or choice == 'a':
+            player.hit(target)
+            if target.health > 0:
+                target.hit(player)
+            player.get_status()
+            target.get_status()
+        elif choice == 'cast' or choice == 'C' or choice == 'Cast' or choice == 'c':
+            spell_cast(player, target)
+        elif choice == 'i' or choice == 'I' or choice == 'item' or choice == 'Item':
+            pass #item(player)
+        elif choice == 'Save' or choice == 's' or choice == 'S' or choice == 'save':
+            slow_print('Saving please wait....\n')
+            time.sleep(1)
+            save(player)
+        elif choice == 'q' or choice == 'quit' or choice == 'Q' or choice == 'quit':
+            slow_print(f"Are you sure you want to quit?\n")
+            type = input('> ')
+            if type =="y" or type =='yes':
+                sys.exit()
+            elif type =='n' or type =="no":
+                pass
+        else:
+            slow_print("Invalid input, please type fight or run\n")
+    
+        if target.health <= 190:
+            loop = False
+            drider2_combat(player, target)
+
+def drider2_combat(player, target):
+    os.system('clear')
+    time.sleep(1)
+    slow_print('\033[91mThe dragon thrashes about in panic and rage...\033[0m\n')
+    time.sleep(1)
+    slow_print('\033[91mIn the chaos, the dragon rider falls from the sky...\033[0m\n')
+    time.sleep(1)
+    slow_print('\033[91mThe enraged dragon now lunges at you!\033[0m \n')
+    time.sleep(1)
+
+    loop = True
+    while loop:
+        print('\033[92m')
+        load_ascii_art('images/dragonattack.txt')
+        print('\033[0m')
+        print(f'{player.name} | \033[91mHealth\033[0m: {player.health}/{player.max_health} | \033[94mMana\033[0m: {player.mana}/{player.max_mana} | \033[93mgold\033[0m: {player.gold}')
+        print(f'{target.name} | \033[91mHealth\033[0m: {target.health}/{target.max_health}\n')
+        print(f'|\ [A]ttack /\ [C]ast /\ [I]tem /\ [S]ave /\ [Q]uit:/| \n')
+        choice = input('> ')
+        if choice  == 'attack' or choice == 'A' or choice == 'a':
+            player.hit(target)
+            if target.health > 0:
+                target.hit(player)
+            player.get_status()
+            target.get_status()
+        elif choice == 'cast' or choice == 'C' or choice == 'Cast' or choice == 'c':
+            spell_cast(player, target)
+        elif choice == 'i' or choice == 'I' or choice == 'item' or choice == 'Item':
+            pass #item(player)
+        elif choice == 'Save' or choice == 's' or choice == 'S' or choice == 'save':
+            slow_print('Saving please wait....\n')
+            time.sleep(1)
+            save(player)
+        elif choice == 'q' or choice == 'quit' or choice == 'Q' or choice == 'quit':
+            slow_print(f"Are you sure you want to quit?\n")
+            type = input('> ')
+            if type =="y" or type =='yes':
+                sys.exit()
+            elif type =='n' or type =="no":
+                pass
+        else:
+            slow_print("Invalid input, please type fight or run\n")
+
+        if player.health <= 0:
+            death(player, target)
+
+        if target.health <= 0:
+            loop = False
+            os.system('clear')
+            time.sleep(1)
+            slow_print(f'{target.name} has been slain!\n')
+            time.sleep(1)
+            slow_print(f'{player.name} has been awarded {target.gold} \033[93mgold!\033[0m\n')
+            player.get_gold(target)
+            time.sleep(1)
+            wizard_return(player)
