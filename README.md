@@ -16,4 +16,8 @@ battle sequence. It's now contained within the loop so the values refresh.<br>
 4/30/ 5/1: Finished up the combat system and implemented the shop, and the axe shop.<br>
 Started the dragon-rider combat sequence.<br>
 <br>
+5/5: Wow, so it's been more difficult for me to keep up with this log, than it has<br>
+coding the game. Added the first quest, you can buy spell scrolls from the shop,<br>
+combat with 2 knights, cutscenes, and the beginning to a dungeon.<br>
+<br>
 -BloodLordSoth
