@@ -6,3 +6,9 @@
          ()__________)               ()__________)               ()__________)      
        1. Scroll of Fireball       2. Scroll of Healing        3. Scroll of thunder
               200 gold                    400 gold                    1000 gold
+
+            Deals 5-10 dmg             restores 20-30 health        Deals 2 - 12 dmg x2
+
+                          Purchase the scroll to learn the ability.
+
+

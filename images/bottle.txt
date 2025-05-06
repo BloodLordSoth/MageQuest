@@ -1,0 +1,11 @@
+                [====]                        [====]
+                 )  (                          )  (
+              .-'    '-.                    .-'    '-.
+             |          |                  |          |
+             | .------. |                  | .------. |
+             | | Mana | |                  | |Health| | 
+             | '------' |                  | '------' |
+             |          |                  |          |
+             '----------'                  '----------'
+        Basic Mana potion: 80 gold     Basic Health potion: 80 gold
+            Restores 30 mana              Restores 30 health

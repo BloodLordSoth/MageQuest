@@ -17,4 +17,3 @@
 	 | |  5. Dragon Bane - 2200 gold     | +50 str / +15 min hit / +20 health        | |
          | |                                          (Chance to double-hit)             | |
          |_/^(o.o)^\ /^(o.o)^\ /^(o.o)^\ /^(o.o)^\ /^(o.o)^\ /^(o.o)^\ /^(o.o)^\ /^(o.o)^\_| 
-           

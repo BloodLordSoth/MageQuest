@@ -66,6 +66,6 @@ greater_corrosion = Spells(name="Greater Corruption", damage=10, min_dmg=2, mana
 
 #Utility
 teleport = Spells(name="Teleport", damage=0, min_dmg=2, mana_cost=20, healing=0, cooldown_time=2)
-heal = Spells(name="Heal", damage=0, min_dmg=15, mana_cost=10, healing=30, cooldown_time=2)
+heal = Spells(name="Heal", damage=0, min_dmg=0, mana_cost=10, healing=30, cooldown_time=2)
 greater_heal = Spells(name="Greater Heal", damage=0, min_dmg=2, mana_cost=20, healing=40, cooldown_time=2)
 divine_prot = Spells(name="Divine Protection", damage=0, min_dmg=2, mana_cost=40, healing=0, cooldown_time=2)

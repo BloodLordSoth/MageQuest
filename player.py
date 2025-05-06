@@ -1,8 +1,8 @@
 import random, time
 from spells import *
 from weapons import *
+from items import *
 from main import slow_print
-from values import max_hit, get_name
 
 class Player():
     def __init__(self, health, max_hit, name, max_health, mana, max_mana, gold):
@@ -12,14 +12,18 @@ class Player():
         self.max_health = max_health
         self.mana = mana
         self.max_mana = max_mana
-        self.spells = [fireball, heal, ice_spire]
+        self.spells = []
         self.gold = gold
         self.weapons = []
         self.inventory = {}
+        self.items = {}
+
+
     
     def get_gold(self, target):
-        gold_loot = random.randint(30, target.gold)
+        gold_loot = random.randint(100, target.gold) * 2
         self.gold += gold_loot
+        slow_print(f'{self.name} has been awarded {gold_loot} \033[93mgold!\033[0m\n')
     
     def magic_gold(self):
         self.gold += 30_000
@@ -27,6 +31,26 @@ class Player():
     def get_hit(self, damage):
         self.health -= damage
 
+    def heal_me(self):
+        heal_price = self.gold // 5
+        if self.gold < heal_price or self.gold == 0:
+            ('Sorry hero, these spell components aren\'t cheap!')
+        else:
+            self.gold -= heal_price
+            self.health = self.max_health
+            self.mana = self.max_mana
+
+    def buy_scroll(self, spell, item):
+        if any(s.name == spell.name for s in self.spells):
+            slow_print(f'You already know the {spell.name} spell.\n')
+            time.sleep(0.5)
+        elif self.gold >= item.cost:
+            self.gold -= item.cost
+            self.spells.append(spell)
+            slow_print(f'{spell.name} has been added to your Spellbook.\n')
+        else:
+            slow_print(f'You don\'t have enough gold to purchase the {item.name}.\n')
+        time.sleep(0.5)
 
     def buy_weapon(self, weapon):
         if any(w.name == weapon.name for w in self.weapons):
@@ -39,16 +63,6 @@ class Player():
             slow_print(f'You don\'t have enough gold to purchase the {weapon.name}.\n')
         time.sleep(0.5)
 
-    ##for item in self.weapons:
-            #if item.name not in self.weapons:
-                #slow_print('You already own this item.')
-                #time.sleep(0.5)
-                #if self.gold >= weapons.cost: 
-                    #self.gold -= weapons.cost
-                    #self.weapons.append(weapons)
-                #else:
-                    #slow_print('You don\'t have enough gold\n')
-        #time.sleep(1)
 
     def get_healed(self, healing):
         self.health += healing
@@ -86,16 +100,6 @@ class Player():
         else:
             slow_print(f"{self.name} doesn't have enough mana to cast {spells.name}!\n")
 
-        
-    def ice_spire(self, target):
-        ice_spire = Spells(name="Ice Spire", damage=60, mana_cost=30, healing=0)
-        if self.mana >= ice_spire.mana_cost:
-            self.mana -= ice_spire.mana_cost
-            damage = random.randint(1, ice_spire.damage)
-            slow_print(f'{self.name} deals {ice_spire.damage} damage to the {target.name}\n')
-            target.get_hit(damage)
-        else:
-            slow_print('You are low on mana\n')
 
     def hit(self, target):
         damage = random.randint(1, self.max_hit)
@@ -108,9 +112,11 @@ class Player():
     
     def get_status(self):
         slow_print(f"{self.name} has {self.health} health left\n")
-        time.sleep(1)
+        time.sleep(0.5)
+
 
 goblin = Player(health=60, max_hit=4, name='Goblin', max_health=60, mana=None, max_mana=None, gold=0)
+knight = Player(health=60, max_hit=10, name='Knight', max_health=60, mana=None, max_mana=None, gold=300)
 skeleton = Player(health=120, max_hit=8, name='Skeleton', max_health=120, mana=None, max_mana=None, gold=0)
 wyvern = Player(health=350, max_hit=18, name='Wyvern', max_health=350, mana=None, max_mana=None, gold=0)
 dragon = Player(health=280, max_hit=22, name='Dragon', max_health=280, mana=None, max_mana=None, gold=0)

@@ -1,0 +1,13 @@
+       __________                  __________                  __________  
+      ()_________)                ()_________)                ()_________)
+       \Corrosion \                \   Fire   \                \ Ice     \
+        \   Spell  \                \   Storm  \                \   Lance \
+         \__________\                \__________\                \__________\
+         ()__________)               ()__________)               ()__________)      
+       1. Scroll of Corrosion       2. Scroll of Fire Storm        3. Scroll of Ice Lance
+              400 gold                    880 gold                       2200 gold
+
+           Deals 5-10 dot dmg        Deals 20 - 30 dmg            Deals 15 - 40 dmg x3
+                                        2-10 dot dmg
+                          
+                          Purchase the scroll to learn the ability.
